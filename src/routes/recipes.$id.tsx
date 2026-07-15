@@ -2,9 +2,10 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Clock, User, Bookmark, BookmarkCheck, ArrowLeft } from "lucide-react";
+import { Clock, User, Bookmark, BookmarkCheck } from "lucide-react";
 import { toast } from "sonner";
 import { categoryLabel } from "@/lib/recipes";
+import { BackButton } from "@/components/BackButton";
 
 export const Route = createFileRoute("/recipes/$id")({
   head: ({ loaderData }: { loaderData?: { title?: string; description?: string } }) => ({
@@ -115,12 +116,11 @@ function RecipeDetail() {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-8">
-      <Link
-        to="/"
-        className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
-      >
-        <ArrowLeft className="size-4" /> უკან
-      </Link>
+      <div className="mb-6">
+        <BackButton />
+      </div>
+
+
 
       {recipe.image_url && (
         <div className="mb-8 overflow-hidden rounded-3xl">

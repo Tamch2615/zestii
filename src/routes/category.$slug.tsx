@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { CATEGORIES, categoryLabel } from "@/lib/recipes";
 import { RecipeCard, type RecipeCardData } from "@/components/RecipeCard";
+import { BackButton } from "@/components/BackButton";
 
 export const Route = createFileRoute("/category/$slug")({
   head: ({ params }) => {
@@ -41,6 +42,9 @@ function CategoryPage() {
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
+      <div className="mb-6">
+        <BackButton />
+      </div>
       <div className="mb-8 flex flex-wrap gap-2">
         {CATEGORIES.map((c) => (
           <Link

@@ -9,11 +9,11 @@ import { Search } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "გემოვანი — აღმოაჩინე ქართული გემოები" },
+      { title: "love at first bite — illustrated Georgian cookbook" },
       {
         name: "description",
         content:
-          "პერსონალური კულინარიული ბლოგი: საუზმე, სადილი, ვახშამი, დესერტი და სასმელი. ატვირთე, გააზიარე და შეინახე რეცეპტები.",
+          "An illustrated cookbook of Georgian home recipes: breakfast, lunch, dinner, dessert and drinks. Upload, share, save.",
       },
     ],
   }),
@@ -26,7 +26,9 @@ function HomePage() {
     queryFn: async (): Promise<RecipeCardData[]> => {
       const { data, error } = await supabase
         .from("recipes")
-        .select("id, title, description, prep_time_minutes, categories, image_url, author:profiles!recipes_author_id_profiles_fkey(username)")
+        .select(
+          "id, title, description, prep_time_minutes, categories, image_url, author:profiles!recipes_author_id_profiles_fkey(username)",
+        )
         .order("created_at", { ascending: false })
         .limit(9);
       if (error) throw error;
@@ -36,67 +38,99 @@ function HomePage() {
 
   return (
     <main className="min-h-screen">
-      {/* Hero */}
+      {/* Hero — illustrated cookbook cover */}
       <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-2 md:items-center md:py-24">
-          <div>
-            <p className="mb-4 text-sm font-bold uppercase tracking-widest text-brand-secondary">
-              პერსონალური კულინარიული სივრცე
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-[1fr_1.1fr] md:items-center md:py-20">
+          {/* Left: sage stripe + editorial title */}
+          <div className="relative">
+            <div
+              aria-hidden
+              className="absolute -left-6 top-0 hidden h-full w-3 bg-primary md:block"
+            />
+            <p className="mb-4 font-serif text-sm italic text-primary">— an illustrated cookbook —</p>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.35em] text-brand-secondary">
+              kristyn · levan · nino
             </p>
-            <h1 className="mb-6 font-serif text-5xl leading-tight text-foreground md:text-6xl">
-              აღმოაჩინე ახალი <span className="italic text-primary">გემოები</span>
+            <h1 className="mb-2 font-serif text-6xl font-bold leading-[0.95] text-foreground md:text-[5.5rem]">
+              love
+              <span className="mx-3 font-serif text-3xl italic font-normal text-muted-foreground md:text-4xl">
+                at first
+              </span>
+              <br className="hidden md:block" />
+              <span className="italic text-brand-secondary">bite.</span>
             </h1>
-            <p className="mb-8 max-w-lg text-lg text-muted-foreground">
-              ატვირთე შენი საოჯახო რეცეპტები, აღმოაჩინე სხვების საიდუმლოებანი და
-              შეინახე საყვარელი კერძები ერთ ადგილას.
+            <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
+              ქართული სახლის რეცეპტების ილუსტრირებული კრებული — საუზმიდან ღვინომდე.
+              ატვირთე შენი საოჯახო რეცეპტი, აღმოაჩინე ახალი გემო, შეინახე ის, რაც შეგიყვარდა.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/search"
-                className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 font-semibold text-primary-foreground hover:bg-primary/90"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground hover:bg-primary/90"
               >
                 <Search className="size-4" />
-                ჭკვიანი ძებნა ინგრედიენტებით
+                ინგრედიენტებით ძებნა
               </Link>
               <Link
                 to="/new-recipe"
-                className="inline-flex items-center gap-2 rounded-xl border border-foreground/20 bg-background px-6 py-3 font-semibold text-foreground hover:bg-accent"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-foreground bg-background px-6 py-3 font-bold text-foreground hover:bg-foreground hover:text-background"
               >
                 + რეცეპტის დამატება
               </Link>
             </div>
           </div>
+
+          {/* Right: illustrated cover */}
           <div className="relative">
-            <img
-              src={heroImg}
-              alt="ქართული სუფრა"
-              width={1600}
-              height={1000}
-              className="aspect-[4/3] w-full rounded-3xl object-cover shadow-2xl shadow-primary/20"
-            />
-            <div className="absolute -bottom-4 -left-4 rounded-2xl bg-background px-5 py-3 shadow-xl ring-1 ring-border md:-bottom-6 md:-left-6">
-              <p className="font-serif text-lg italic text-primary">გემოვანი</p>
-              <p className="text-xs text-muted-foreground">ქართული სამზარეულო</p>
+            <div className="relative rounded-[2rem] border border-border bg-card p-4 shadow-[0_30px_80px_-30px_rgba(90,60,30,0.35)] md:p-6">
+              <img
+                src={heroImg}
+                alt="ილუსტრირებული ქართული სუფრა"
+                width={1408}
+                height={1104}
+                className="aspect-[5/4] w-full rounded-[1.4rem] object-cover"
+              />
+              <div className="mt-4 flex items-baseline justify-between px-2">
+                <p className="font-serif text-xs italic text-muted-foreground">little book of recipes</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-secondary">
+                  vol. 01
+                </p>
+              </div>
             </div>
+            <div
+              aria-hidden
+              className="absolute -right-3 -top-3 hidden size-16 rounded-full bg-mustard/80 md:block"
+            />
+            <div
+              aria-hidden
+              className="absolute -bottom-3 -left-3 hidden size-10 rounded-full bg-brand-secondary/80 md:block"
+            />
           </div>
         </div>
       </section>
 
       {/* Categories */}
       <section className="mx-auto max-w-7xl px-6 py-12">
-        <div className="mb-8 flex items-end justify-between">
-          <h2 className="font-serif text-3xl font-bold text-foreground">კატეგორიები</h2>
-          <p className="text-sm text-muted-foreground">აირჩიე გემო, რასაც ეძებ</p>
+        <div className="mb-8 flex items-end justify-between border-b border-border pb-4">
+          <h2 className="font-serif text-4xl font-bold text-foreground">
+            <span className="italic text-primary">chapters</span> — კატეგორიები
+          </h2>
+          <p className="hidden text-sm italic text-muted-foreground md:inline">
+            აირჩიე გემო, რასაც ეძებ
+          </p>
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
-          {CATEGORIES.map((c) => (
+          {CATEGORIES.map((c, i) => (
             <Link
               key={c.slug}
               to="/category/$slug"
               params={{ slug: c.slug }}
-              className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-6 text-center transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
+              className="group relative flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-6 text-center transition-all hover:-translate-y-1 hover:border-primary hover:shadow-lg"
             >
-              <span className="text-4xl transition-transform group-hover:scale-110">
+              <span className="absolute left-3 top-3 font-serif text-xs italic text-muted-foreground">
+                0{i + 1}
+              </span>
+              <span className="text-5xl transition-transform group-hover:scale-110">
                 {c.emoji}
               </span>
               <span className="font-serif text-lg font-bold text-foreground group-hover:text-primary">
@@ -109,14 +143,12 @@ function HomePage() {
 
       {/* Latest Recipes */}
       <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="mb-8 flex items-end justify-between">
+        <div className="mb-8 flex items-end justify-between border-b border-border pb-4">
           <div>
-            <h2 className="mb-1 font-serif text-3xl font-bold text-foreground">
-              ახალი რეცეპტები
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              საზოგადოების უახლესი გამოქვეყნებული კერძები
+            <p className="mb-1 text-xs font-bold uppercase tracking-[0.3em] text-brand-secondary">
+              fresh from the kitchen
             </p>
+            <h2 className="font-serif text-4xl font-bold text-foreground">ახალი რეცეპტები</h2>
           </div>
         </div>
 
@@ -140,7 +172,7 @@ function HomePage() {
             </p>
             <Link
               to="/new-recipe"
-              className="inline-flex rounded-xl bg-primary px-6 py-3 font-semibold text-primary-foreground hover:bg-primary/90"
+              className="inline-flex rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground hover:bg-primary/90"
             >
               დაამატე პირველი რეცეპტი
             </Link>
@@ -148,10 +180,13 @@ function HomePage() {
         )}
       </section>
 
-      <footer className="mt-12 border-t border-border bg-card py-10">
+      <footer className="mt-12 border-t border-border py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
-          <p className="font-serif text-xl italic text-primary/60">გემოვანი</p>
-          <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+          <p className="font-serif text-2xl italic text-brand-secondary">
+            love <span className="text-muted-foreground">at first</span>{" "}
+            <span className="text-primary">bite</span>
+          </p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-muted-foreground">
             © 2026 — საბაკალავრო პროექტი (BIT-21.2025.G)
           </p>
         </div>

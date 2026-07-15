@@ -78,15 +78,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "გემოვანი — ქართული კულინარიული რეცეპტების ბლოგი" },
+      { title: "love at first bite — illustrated Georgian cookbook" },
       {
         name: "description",
         content:
-          "პერსონალური და ინტერაქტიული კულინარიული პლატფორმა: ატვირთე შენი რეცეპტები, აღმოაჩინე ახალი გემოები, დაიმახსოვრე საყვარელი კერძები.",
+          "An illustrated cookbook of Georgian home recipes. Upload, discover and save the flavours you love at first bite.",
       },
-      { name: "author", content: "გემოვანი" },
-      { property: "og:title", content: "გემოვანი — ქართული კულინარიული ბლოგი" },
-      { property: "og:description", content: "შენი პერსონალური კულინარიული სივრცე ქართული რეცეპტებისთვის." },
+      { name: "author", content: "love at first bite" },
+      { property: "og:title", content: "love at first bite — Georgian cookbook" },
+      { property: "og:description", content: "Illustrated Georgian recipes to fall in love with." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&family=Noto+Serif+Georgian:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600;1,9..144,700&family=Nunito:wght@400;500;600;700;800&family=Noto+Sans+Georgian:wght@400;500;600;700&family=Noto+Serif+Georgian:wght@400;600;700&display=swap",
       },
     ],
   }),
@@ -138,34 +138,35 @@ function SiteHeader() {
   if (pathname.startsWith("/auth")) return null;
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/80 px-6 py-4 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
-        <Link to="/" className="font-serif text-2xl italic tracking-tight text-primary">
-          გემოვანი
+    <nav className="sticky top-[14px] z-40 border-b border-border/60 bg-background/85 px-6 py-4 backdrop-blur-md md:top-[20px]">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+        <Link to="/" className="flex items-baseline gap-1 leading-none">
+          <span className="font-serif text-2xl italic text-brand-secondary md:text-3xl">love</span>
+          <span className="hidden text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground sm:inline">
+            at first
+          </span>
+          <span className="font-serif text-2xl italic text-primary md:text-3xl">bite</span>
         </Link>
-        <div className="flex items-center gap-6">
-          <Link to="/" className="text-sm font-medium text-foreground hover:text-primary">
+        <div className="flex items-center gap-4 md:gap-6">
+          <Link to="/" className="hidden text-sm font-semibold text-foreground hover:text-primary sm:inline">
             მთავარი
           </Link>
-          <Link
-            to="/search"
-            className="text-sm font-medium text-foreground hover:text-primary"
-          >
+          <Link to="/search" className="text-sm font-semibold text-foreground hover:text-primary">
             ჭკვიანი ძებნა
           </Link>
           {user ? (
             <>
               <Link
                 to="/new-recipe"
-                className="hidden rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background hover:bg-primary md:inline-flex"
+                className="hidden rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-primary/90 md:inline-flex"
               >
-                + ახალი რეცეპტი
+                + რეცეპტი
               </Link>
               <Link
                 to="/profile"
                 className="flex items-center gap-2 rounded-full border border-brand-secondary/40 bg-brand-secondary/10 px-3 py-1.5 hover:bg-brand-secondary/20"
               >
-                <span className="grid size-7 place-items-center rounded-full bg-brand-secondary/30 text-xs font-bold text-primary">
+                <span className="grid size-7 place-items-center rounded-full bg-brand-secondary/30 text-xs font-bold text-brand-secondary">
                   {user.email?.[0]?.toUpperCase() ?? "მ"}
                 </span>
                 <span className="hidden text-sm font-semibold md:inline">ჩემი გვერდი</span>
@@ -174,7 +175,7 @@ function SiteHeader() {
           ) : (
             <Link
               to="/auth"
-              className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+              className="rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-primary/90"
             >
               ავტორიზაცია
             </Link>
@@ -200,9 +201,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SiteHeader />
-      <Outlet />
-      <Toaster richColors position="top-center" />
+      <div className="gingham-strip top" aria-hidden />
+      <div className="gingham-strip bottom" aria-hidden />
+      <div className="gingham-strip left" aria-hidden />
+      <div className="gingham-strip right" aria-hidden />
+      <div className="min-h-screen px-[14px] pb-[14px] pt-[14px] md:px-[20px] md:pb-[20px] md:pt-[20px]">
+        <SiteHeader />
+        <Outlet />
+        <Toaster richColors position="top-center" />
+      </div>
     </QueryClientProvider>
   );
 }

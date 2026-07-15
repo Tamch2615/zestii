@@ -5,8 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — "გემოვანი" თბილი კულინარიული რედაქტორული
- * Warm terracotta + cream + serif display
+ * Design system — "love at first bite"
+ * Illustrated cookbook cover: cream paper, sage green, tomato red,
+ * mustard, dark cocoa. Fraunces display serif + Nunito body.
  */
 
 @theme inline {
@@ -37,57 +38,68 @@
   --color-ring: var(--ring);
   --color-brand: var(--brand);
   --color-brand-secondary: var(--brand-secondary);
-  --font-sans: 'Noto Sans Georgian', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', 'Noto Serif Georgian', Georgia, serif;
+  --color-tomato: var(--tomato);
+  --color-mustard: var(--mustard);
+  --font-sans: 'Nunito', 'Noto Sans Georgian', system-ui, sans-serif;
+  --font-serif: 'Fraunces', 'Noto Serif Georgian', Georgia, serif;
 }
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.985 0.008 80);
-  --foreground: oklch(0.22 0.01 40);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.01 40);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.01 40);
-  --primary: oklch(0.55 0.13 25);            /* terracotta #a75d5d */
-  --primary-foreground: oklch(0.985 0.008 80);
-  --brand: oklch(0.55 0.13 25);
-  --brand-secondary: oklch(0.78 0.08 70);    /* warm sand #d3ad7f */
-  --secondary: oklch(0.94 0.015 70);
-  --secondary-foreground: oklch(0.22 0.01 40);
-  --muted: oklch(0.94 0.012 70);
-  --muted-foreground: oklch(0.5 0.02 40);
-  --accent: oklch(0.93 0.03 65);
-  --accent-foreground: oklch(0.3 0.05 30);
+  /* cream paper */
+  --background: oklch(0.965 0.022 85);
+  /* deep cocoa */
+  --foreground: oklch(0.24 0.02 55);
+  --card: oklch(0.99 0.012 85);
+  --card-foreground: oklch(0.24 0.02 55);
+  --popover: oklch(0.99 0.012 85);
+  --popover-foreground: oklch(0.24 0.02 55);
+  /* sage green — primary */
+  --primary: oklch(0.55 0.07 130);
+  --primary-foreground: oklch(0.98 0.02 85);
+  --brand: oklch(0.55 0.07 130);
+  /* tomato red — accent */
+  --brand-secondary: oklch(0.6 0.19 25);
+  --tomato: oklch(0.6 0.19 25);
+  /* mustard yellow */
+  --mustard: oklch(0.78 0.14 80);
+  --secondary: oklch(0.93 0.025 80);
+  --secondary-foreground: oklch(0.24 0.02 55);
+  --muted: oklch(0.93 0.02 80);
+  --muted-foreground: oklch(0.48 0.03 60);
+  --accent: oklch(0.9 0.05 90);
+  --accent-foreground: oklch(0.3 0.05 45);
   --destructive: oklch(0.55 0.22 25);
-  --destructive-foreground: oklch(0.985 0.008 80);
-  --border: oklch(0.9 0.015 60);
-  --input: oklch(0.9 0.015 60);
-  --ring: oklch(0.55 0.13 25);
+  --destructive-foreground: oklch(0.98 0.02 85);
+  --border: oklch(0.86 0.03 75);
+  --input: oklch(0.86 0.03 75);
+  --ring: oklch(0.55 0.07 130);
 }
 
 .dark {
-  --background: oklch(0.18 0.01 40);
-  --foreground: oklch(0.96 0.008 80);
-  --card: oklch(0.22 0.01 40);
-  --card-foreground: oklch(0.96 0.008 80);
-  --popover: oklch(0.22 0.01 40);
-  --popover-foreground: oklch(0.96 0.008 80);
-  --primary: oklch(0.65 0.13 25);
-  --primary-foreground: oklch(0.15 0.01 40);
-  --brand: oklch(0.65 0.13 25);
-  --brand-secondary: oklch(0.78 0.08 70);
-  --secondary: oklch(0.28 0.02 40);
-  --secondary-foreground: oklch(0.96 0.008 80);
-  --muted: oklch(0.28 0.02 40);
-  --muted-foreground: oklch(0.7 0.02 60);
-  --accent: oklch(0.3 0.04 40);
-  --accent-foreground: oklch(0.96 0.008 80);
+  --background: oklch(0.2 0.015 55);
+  --foreground: oklch(0.96 0.02 85);
+  --card: oklch(0.24 0.02 55);
+  --card-foreground: oklch(0.96 0.02 85);
+  --popover: oklch(0.24 0.02 55);
+  --popover-foreground: oklch(0.96 0.02 85);
+  --primary: oklch(0.65 0.09 130);
+  --primary-foreground: oklch(0.15 0.01 55);
+  --brand: oklch(0.65 0.09 130);
+  --brand-secondary: oklch(0.68 0.18 25);
+  --tomato: oklch(0.68 0.18 25);
+  --mustard: oklch(0.8 0.14 80);
+  --secondary: oklch(0.3 0.02 55);
+  --secondary-foreground: oklch(0.96 0.02 85);
+  --muted: oklch(0.3 0.02 55);
+  --muted-foreground: oklch(0.72 0.02 70);
+  --accent: oklch(0.34 0.04 60);
+  --accent-foreground: oklch(0.96 0.02 85);
   --destructive: oklch(0.65 0.2 25);
-  --destructive-foreground: oklch(0.96 0.008 80);
+  --destructive-foreground: oklch(0.96 0.02 85);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.65 0.13 25);
+  --ring: oklch(0.65 0.09 130);
 }
 
 @layer base {
@@ -105,5 +117,27 @@
   h1, h2, h3, .font-serif {
     font-family: var(--font-serif);
     font-feature-settings: "kern";
+    letter-spacing: -0.01em;
   }
+}
+
+/* Gingham red border frame around the whole viewport */
+.gingham-strip {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  background-color: #f4d7cf;
+  background-image:
+    linear-gradient(90deg, rgba(214, 69, 69, 0.55) 50%, transparent 50%),
+    linear-gradient(0deg, rgba(214, 69, 69, 0.55) 50%, transparent 50%);
+  background-size: 18px 18px;
+}
+.gingham-strip.top { top: 0; left: 0; right: 0; height: 14px; }
+.gingham-strip.bottom { bottom: 0; left: 0; right: 0; height: 14px; }
+.gingham-strip.left { top: 0; bottom: 0; left: 0; width: 14px; }
+.gingham-strip.right { top: 0; bottom: 0; right: 0; width: 14px; }
+
+@media (min-width: 768px) {
+  .gingham-strip.top, .gingham-strip.bottom { height: 20px; }
+  .gingham-strip.left, .gingham-strip.right { width: 20px; }
 }
