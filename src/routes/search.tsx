@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { RecipeCard, type RecipeCardData } from "@/components/RecipeCard";
 import { Search, X } from "lucide-react";
+import { BackButton } from "@/components/BackButton";
 
 export const Route = createFileRoute("/search")({
   head: () => ({
@@ -68,6 +69,9 @@ function SearchPage() {
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
+      <div className="mb-6">
+        <BackButton />
+      </div>
       <div className="mb-12 text-center">
         <p className="mb-3 text-sm font-bold uppercase tracking-widest text-brand-secondary">
           ჭკვიანი ძებნა
