@@ -26,7 +26,7 @@ function HomePage() {
     queryFn: async (): Promise<RecipeCardData[]> => {
       const { data, error } = await supabase
         .from("recipes")
-        .select("id, title, description, prep_time_minutes, categories, image_url, author:profiles!recipes_author_id_fkey(username)")
+        .select("id, title, description, prep_time_minutes, categories, image_url, author:profiles!recipes_author_id_profiles_fkey(username)")
         .order("created_at", { ascending: false })
         .limit(9);
       if (error) throw error;

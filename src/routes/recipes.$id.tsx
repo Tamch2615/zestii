@@ -40,7 +40,7 @@ function RecipeDetail() {
       const { data, error } = await supabase
         .from("recipes")
         .select(
-          "*, author:profiles!recipes_author_id_fkey(username, bio)",
+          "*, author:profiles!recipes_author_id_profiles_fkey(username, bio)",
         )
         .eq("id", id)
         .maybeSingle();

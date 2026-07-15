@@ -30,7 +30,7 @@ function CategoryPage() {
       const { data, error } = await supabase
         .from("recipes")
         .select(
-          "id, title, description, prep_time_minutes, categories, image_url, author:profiles!recipes_author_id_fkey(username)",
+          "id, title, description, prep_time_minutes, categories, image_url, author:profiles!recipes_author_id_profiles_fkey(username)",
         )
         .contains("categories", [slug])
         .order("created_at", { ascending: false });

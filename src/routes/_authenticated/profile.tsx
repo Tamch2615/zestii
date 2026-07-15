@@ -49,7 +49,7 @@ function ProfilePage() {
       const { data, error } = await supabase
         .from("saved_recipes")
         .select(
-          "recipe:recipes(id, title, description, prep_time_minutes, categories, image_url, author:profiles!recipes_author_id_fkey(username))",
+          "recipe:recipes(id, title, description, prep_time_minutes, categories, image_url, author:profiles!recipes_author_id_profiles_fkey(username))",
         )
         .order("created_at", { ascending: false });
       if (error) throw error;
