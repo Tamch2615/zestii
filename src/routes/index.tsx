@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { CATEGORIES } from "@/lib/recipes";
 import { RecipeCard, type RecipeCardData } from "@/components/RecipeCard";
-import heroImg from "@/assets/hero-food.jpg";
+import heroAsset from "@/assets/hero-food-new.jpg.asset.json";
+const heroImg = heroAsset.url;
 import { Search } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -48,9 +49,6 @@ function HomePage() {
               className="absolute -left-6 top-0 hidden h-full w-3 bg-primary md:block"
             />
             <p className="mb-4 font-serif text-sm italic text-primary">ილუსტრირებული კულინარიული წიგნი</p>
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.35em] text-brand-secondary">
-              vol. 01
-            </p>
             <h1 className="mb-2 font-serif text-6xl font-bold leading-[0.95] text-foreground md:text-[6rem]">
               <span className="italic text-brand-secondary">ზეს</span>
               <span className="italic text-primary">ტი</span>
@@ -89,9 +87,6 @@ function HomePage() {
               />
               <div className="mt-4 flex items-baseline justify-between px-2">
                 <p className="font-serif text-xs italic text-muted-foreground">little book of recipes</p>
-                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-secondary">
-                  vol. 01
-                </p>
               </div>
             </div>
             <div
