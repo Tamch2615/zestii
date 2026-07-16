@@ -9,11 +9,11 @@ import { Search } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "love at first bite — illustrated Georgian cookbook" },
+      { title: "ზესტი. ილუსტრირებული კულინარიული წიგნი" },
       {
         name: "description",
         content:
-          "An illustrated cookbook of Georgian home recipes: breakfast, lunch, dinner, dessert and drinks. Upload, share, save.",
+          "ზესტი. საერთაშორისო რეცეპტების ილუსტრირებული კრებული ქართულად: საუზმე, სადილი, ვახშამი, დესერტი და სასმელები.",
       },
     ],
   }),
@@ -47,21 +47,18 @@ function HomePage() {
               aria-hidden
               className="absolute -left-6 top-0 hidden h-full w-3 bg-primary md:block"
             />
-            <p className="mb-4 font-serif text-sm italic text-primary">— an illustrated cookbook —</p>
+            <p className="mb-4 font-serif text-sm italic text-primary">ილუსტრირებული კულინარიული წიგნი</p>
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.35em] text-brand-secondary">
-              kristyn · levan · nino
+              vol. 01
             </p>
-            <h1 className="mb-2 font-serif text-6xl font-bold leading-[0.95] text-foreground md:text-[5.5rem]">
-              love
-              <span className="mx-3 font-serif text-3xl italic font-normal text-muted-foreground md:text-4xl">
-                at first
-              </span>
-              <br className="hidden md:block" />
-              <span className="italic text-brand-secondary">bite.</span>
+            <h1 className="mb-2 font-serif text-6xl font-bold leading-[0.95] text-foreground md:text-[6rem]">
+              <span className="italic text-brand-secondary">ზეს</span>
+              <span className="italic text-primary">ტი</span>
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
-              ქართული სახლის რეცეპტების ილუსტრირებული კრებული — საუზმიდან ღვინომდე.
-              ატვირთე შენი საოჯახო რეცეპტი, აღმოაჩინე ახალი გემო, შეინახე ის, რაც შეგიყვარდა.
+              საერთაშორისო რეცეპტების ილუსტრირებული კრებული ქართულ ენაზე. საუზმიდან
+              ვახშმამდე, დესერტიდან სასმელამდე. ატვირთე შენი საოჯახო რეცეპტი, აღმოაჩინე
+              ახალი გემო, შეინახე ის, რაც შეგიყვარდა.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -85,7 +82,7 @@ function HomePage() {
             <div className="relative rounded-[2rem] border border-border bg-card p-4 shadow-[0_30px_80px_-30px_rgba(90,60,30,0.35)] md:p-6">
               <img
                 src={heroImg}
-                alt="ილუსტრირებული ქართული სუფრა"
+                alt="ილუსტრირებული საერთაშორისო სუფრა"
                 width={1408}
                 height={1104}
                 className="aspect-[5/4] w-full rounded-[1.4rem] object-cover"
@@ -113,23 +110,20 @@ function HomePage() {
       <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="mb-8 flex items-end justify-between border-b border-border pb-4">
           <h2 className="font-serif text-4xl font-bold text-foreground">
-            <span className="italic text-primary">chapters</span> — კატეგორიები
+            <span className="italic text-primary">კატეგორიები</span>
           </h2>
           <p className="hidden text-sm italic text-muted-foreground md:inline">
             აირჩიე გემო, რასაც ეძებ
           </p>
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
-          {CATEGORIES.map((c, i) => (
+          {CATEGORIES.map((c) => (
             <Link
               key={c.slug}
               to="/category/$slug"
               params={{ slug: c.slug }}
               className="group relative flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-6 text-center transition-all hover:-translate-y-1 hover:border-primary hover:shadow-lg"
             >
-              <span className="absolute left-3 top-3 font-serif text-xs italic text-muted-foreground">
-                0{i + 1}
-              </span>
               <span className="text-5xl transition-transform group-hover:scale-110">
                 {c.emoji}
               </span>
@@ -182,12 +176,12 @@ function HomePage() {
 
       <footer className="mt-12 border-t border-border py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
-          <p className="font-serif text-2xl italic text-brand-secondary">
-            love <span className="text-muted-foreground">at first</span>{" "}
-            <span className="text-primary">bite</span>
+          <p className="font-serif text-2xl italic">
+            <span className="text-brand-secondary">ზეს</span>
+            <span className="text-primary">ტი</span>
           </p>
           <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-muted-foreground">
-            © 2026 — საბაკალავრო პროექტი (BIT-21.2025.G)
+            © 2026 · საბაკალავრო პროექტი (BIT-21.2025.G)
           </p>
         </div>
       </footer>

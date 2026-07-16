@@ -7,7 +7,7 @@ import { CATEGORIES, recipeSchema } from "@/lib/recipes";
 import { X, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/edit-recipe/$id")({
-  head: () => ({ meta: [{ title: "რეცეპტის რედაქტირება — გემოვანი" }] }),
+  head: () => ({ meta: [{ title: "რეცეპტის რედაქტირება · ზესტი" }] }),
   component: EditRecipe,
 });
 

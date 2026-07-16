@@ -9,7 +9,7 @@ import { BackButton } from "@/components/BackButton";
 export const Route = createFileRoute("/search")({
   head: () => ({
     meta: [
-      { title: "ჭკვიანი ძებნა — გემოვანი" },
+      { title: "ჭკვიანი ძებნა · ზესტი" },
       { name: "description", content: "მონიშნე ინგრედიენტები და აღმოაჩინე შესაბამისი რეცეპტები." },
     ],
   }),

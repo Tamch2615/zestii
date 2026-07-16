@@ -78,15 +78,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "love at first bite — illustrated Georgian cookbook" },
+      { title: "ზესტი. ილუსტრირებული კულინარიული წიგნი" },
       {
         name: "description",
         content:
-          "An illustrated cookbook of Georgian home recipes. Upload, discover and save the flavours you love at first bite.",
+          "ზესტი. რეცეპტების ილუსტრირებული კრებული ქართულ ენაზე. ატვირთე, აღმოაჩინე და შეინახე შენი საყვარელი გემოები.",
       },
-      { name: "author", content: "love at first bite" },
-      { property: "og:title", content: "love at first bite — Georgian cookbook" },
-      { property: "og:description", content: "Illustrated Georgian recipes to fall in love with." },
+      { name: "author", content: "ზესტი" },
+      { property: "og:title", content: "ზესტი. ილუსტრირებული კულინარიული წიგნი" },
+      { property: "og:description", content: "საერთაშორისო რეცეპტების ილუსტრირებული კრებული ქართულად." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -140,12 +140,9 @@ function SiteHeader() {
   return (
     <nav className="sticky top-[14px] z-40 border-b border-border/60 bg-background/85 px-6 py-4 backdrop-blur-md md:top-[20px]">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-        <Link to="/" className="flex items-baseline gap-1 leading-none">
-          <span className="font-serif text-2xl italic text-brand-secondary md:text-3xl">love</span>
-          <span className="hidden text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground sm:inline">
-            at first
-          </span>
-          <span className="font-serif text-2xl italic text-primary md:text-3xl">bite</span>
+        <Link to="/" className="flex items-baseline gap-0.5 leading-none">
+          <span className="font-serif text-3xl italic text-brand-secondary md:text-4xl">ზეს</span>
+          <span className="font-serif text-3xl italic text-primary md:text-4xl">ტი</span>
         </Link>
         <div className="flex items-center gap-4 md:gap-6">
           <Link to="/" className="hidden text-sm font-semibold text-foreground hover:text-primary sm:inline">

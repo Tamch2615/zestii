@@ -10,7 +10,7 @@ export const Route = createFileRoute("/category/$slug")({
     const label = categoryLabel(params.slug);
     return {
       meta: [
-        { title: `${label} — გემოვანი` },
+        { title: `${label} · ზესტი` },
         { name: "description", content: `${label} კატეგორიის რეცეპტები გემოვანზე.` },
       ],
     };
@@ -63,7 +63,7 @@ function CategoryPage() {
       </div>
 
       <h1 className="mb-8 font-serif text-4xl font-bold">
-        <span className="italic text-primary">{label}</span> — რეცეპტები
+        <span className="italic text-primary">{label}</span> · რეცეპტები
       </h1>
 
       {isLoading ? (
