@@ -7,7 +7,7 @@ import { z } from "zod";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "ავტორიზაცია — გემოვანი" },
+      { title: "ავტორიზაცია · ზესტი" },
       { name: "description", content: "შედი ან დარეგისტრირდი გემოვანზე." },
     ],
   }),
@@ -87,7 +87,7 @@ function AuthPage() {
     <div className="grid min-h-screen place-items-center bg-background px-4 py-12">
       <div className="w-full max-w-md">
         <Link to="/" className="mb-8 block text-center font-serif text-3xl italic text-primary">
-          გემოვანი
+          ზესტი
         </Link>
         <div className="rounded-3xl border border-border bg-card p-8 shadow-xl shadow-primary/5">
           <h1 className="mb-2 font-serif text-2xl font-bold">

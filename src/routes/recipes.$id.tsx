@@ -10,7 +10,7 @@ import { BackButton } from "@/components/BackButton";
 export const Route = createFileRoute("/recipes/$id")({
   head: ({ loaderData }: { loaderData?: { title?: string; description?: string } }) => ({
     meta: [
-      { title: loaderData?.title ? `${loaderData.title} — გემოვანი` : "რეცეპტი — გემოვანი" },
+      { title: loaderData?.title ? `${loaderData.title} · ზესტი` : "რეცეპტი · ზესტი" },
       {
         name: "description",
         content: loaderData?.description ?? "ქართული კულინარიული რეცეპტი გემოვანზე",

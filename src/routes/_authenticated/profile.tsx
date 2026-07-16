@@ -8,7 +8,7 @@ import { LogOut, Pencil, Trash2, Plus } from "lucide-react";
 import { categoryLabel } from "@/lib/recipes";
 
 export const Route = createFileRoute("/_authenticated/profile")({
-  head: () => ({ meta: [{ title: "ჩემი გვერდი — გემოვანი" }] }),
+  head: () => ({ meta: [{ title: "ჩემი გვერდი · ზესტი" }] }),
   component: ProfilePage,
 });
 
@@ -172,7 +172,7 @@ function ProfilePage() {
         ) : (
           <EmptyState
             title="ჯერ არაფერი გაქვს ატვირთული"
-            body="დაიწყე შენი კულინარიული მოგზაურობა — გააზიარე პირველი რეცეპტი."
+            body="დაიწყე შენი კულინარიული მოგზაურობა. გააზიარე პირველი რეცეპტი."
             cta={{ to: "/new-recipe", label: "ახალი რეცეპტი" }}
           />
         )
