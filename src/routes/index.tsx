@@ -10,11 +10,11 @@ import { Search } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ზესტი. ილუსტრირებული კულინარიული წიგნი" },
+      { title: "ზესტი. კულინარიული ბლოგი" },
       {
         name: "description",
         content:
-          "ზესტი. საერთაშორისო რეცეპტების ილუსტრირებული კრებული ქართულად: საუზმე, სადილი, ვახშამი, დესერტი და სასმელები.",
+          "ზესტი. საერთაშორისო რეცეპტების კულინარიული ბლოგი ქართულად: საუზმე, სადილი, ვახშამი, დესერტი და სასმელები.",
       },
     ],
   }),
@@ -48,7 +48,7 @@ function HomePage() {
               aria-hidden
               className="absolute -left-6 top-0 hidden h-full w-3 bg-primary md:block"
             />
-            <p className="mb-4 font-serif text-sm italic text-primary">ილუსტრირებული კულინარიული წიგნი</p>
+            <p className="mb-4 font-serif text-sm italic text-primary">კულინარიული ბლოგი</p>
             <h1 className="mb-2 font-serif text-6xl font-bold leading-[0.95] text-foreground md:text-[6rem]">
               <span className="italic text-brand-secondary">ზეს</span>
               <span className="italic text-primary">ტი</span>
