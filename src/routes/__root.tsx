@@ -78,15 +78,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ზესტი. ილუსტრირებული კულინარიული წიგნი" },
+      { title: "ზესტი. კულინარიული ბლოგი" },
       {
         name: "description",
         content:
-          "ზესტი. რეცეპტების ილუსტრირებული კრებული ქართულ ენაზე. ატვირთე, აღმოაჩინე და შეინახე შენი საყვარელი გემოები.",
+          "ზესტი. კულინარიული ბლოგი ქართულ ენაზე. ატვირთე, აღმოაჩინე და შეინახე შენი საყვარელი გემოები.",
       },
       { name: "author", content: "ზესტი" },
-      { property: "og:title", content: "ზესტი. ილუსტრირებული კულინარიული წიგნი" },
-      { property: "og:description", content: "საერთაშორისო რეცეპტების ილუსტრირებული კრებული ქართულად." },
+      { property: "og:title", content: "ზესტი. კულინარიული ბლოგი" },
+      { property: "og:description", content: "საერთაშორისო რეცეპტების კულინარიული ბლოგი ქართულად." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
