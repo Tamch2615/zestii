@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
+import { Eye, EyeOff } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -30,6 +31,7 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -49,7 +51,7 @@ function AuthPage() {
       if (mode === "signup") {
         const nameR = usernameSchema.safeParse(username);
         if (!nameR.success) return toast.error(nameR.error.issues[0].message);
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email: emailR.data,
           password: passR.data,
           options: {
@@ -58,14 +60,20 @@ function AuthPage() {
           },
         });
         if (error) throw error;
-        toast.success("რეგისტრაცია წარმატებულია!");
-        navigate({ to: "/profile" });
+        if (data.session) {
+          toast.success("რეგისტრაცია წარმატებულია!");
+          navigate({ to: "/profile" });
+        } else {
+          toast.success("ანგარიში შეიქმნა. დაადასტურეთ ელფოსტა და შემდეგ შედით.");
+          setMode("signin");
+        }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email: emailR.data,
           password: passR.data,
         });
         if (error) throw error;
+        if (!data.session) throw new Error("სესიის შექმნა ვერ მოხერხდა");
         toast.success("კეთილი იყოს თქვენი დაბრუნება!");
         navigate({ to: "/profile" });
       }
@@ -73,9 +81,11 @@ function AuthPage() {
       const msg = err instanceof Error ? err.message : "შეცდომა";
       toast.error(
         msg.includes("Invalid login")
-          ? "არასწორი ელფოსტა ან პაროლი"
+          ? "არასწორი ელფოსტა ან პაროლი. საჭიროების შემთხვევაში აღადგინეთ პაროლი."
           : msg.includes("already registered")
             ? "ეს ელფოსტა უკვე დარეგისტრირებულია"
+            : msg.includes("Email not confirmed")
+              ? "ელფოსტა ჯერ არ არის დადასტურებული"
             : msg,
       );
     } finally {
@@ -126,16 +136,41 @@ function AuthPage() {
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-medium">პაროლი</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-                placeholder="მინიმუმ 6 სიმბოლო"
-                required
-                autoComplete={mode === "signin" ? "current-password" : "new-password"}
-              />
+              <div className="mb-1.5 flex items-center justify-between gap-3">
+                <label className="block text-sm font-medium" htmlFor="password">
+                  პაროლი
+                </label>
+                {mode === "signin" && (
+                  <Link
+                    to="/reset-password"
+                    search={{ request: true }}
+                    className="text-xs font-semibold text-primary hover:underline"
+                  >
+                    დაგავიწყდა პაროლი?
+                  </Link>
+                )}
+              </div>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full rounded-xl border border-input bg-background py-3 pl-4 pr-12 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  placeholder="მინიმუმ 6 სიმბოლო"
+                  required
+                  autoComplete={mode === "signin" ? "current-password" : "new-password"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((visible) => !visible)}
+                  className="absolute inset-y-0 right-0 grid w-12 place-items-center text-muted-foreground hover:text-foreground"
+                  aria-label={showPassword ? "პაროლის დამალვა" : "პაროლის ჩვენება"}
+                  title={showPassword ? "პაროლის დამალვა" : "პაროლის ჩვენება"}
+                >
+                  {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+                </button>
+              </div>
             </div>
             <button
               type="submit"
