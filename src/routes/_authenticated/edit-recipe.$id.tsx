@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useParams, useRouteContext } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,7 +21,7 @@ export function RecipeForm({ initialId }: { initialId?: string } = {}) {
   const id = initialId ?? params.id;
   const isEdit = Boolean(id);
   const navigate = useNavigate();
-  const { user } = Route.useRouteContext();
+  const { user } = useRouteContext({ from: "/_authenticated" });
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
