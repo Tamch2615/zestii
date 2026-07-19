@@ -46,15 +46,10 @@ function SearchPage() {
   const matched = useMemo(() => {
     if (!allRecipes) return [];
     if (selected.length === 0) return allRecipes;
-    return allRecipes
-      .map((r) => {
-        const ingText = r.ingredients.join(" ").toLowerCase();
-        const matches = selected.filter((s) => ingText.includes(s.toLowerCase())).length;
-        return { r, matches };
-      })
-      .filter((x) => x.matches > 0)
-      .sort((a, b) => b.matches - a.matches)
-      .map((x) => x.r);
+    return allRecipes.filter((r) => {
+      const ingText = r.ingredients.join(" ").toLowerCase();
+      return selected.every((s) => ingText.includes(s.toLowerCase()));
+    });
   }, [allRecipes, selected]);
 
   const toggle = (ing: string) =>
