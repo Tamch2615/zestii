@@ -76,6 +76,35 @@ export function RecipeForm({ initialId }: { initialId?: string } = {}) {
     setter(next);
   };
 
+  const handleFileUpload = async (file: File) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      return toast.error("გთხოვთ, აირჩიოთ სურათი");
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      return toast.error("ფაილი 5MB-ზე მეტია");
+    }
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() || "jpg";
+      const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("recipe-images")
+        .upload(path, file, { cacheControl: "3600", upsert: false });
+      if (upErr) throw upErr;
+      const { data: signed, error: signErr } = await supabase.storage
+        .from("recipe-images")
+        .createSignedUrl(path, 60 * 60 * 24 * 365 * 50);
+      if (signErr) throw signErr;
+      setImageUrl(signed.signedUrl);
+      toast.success("სურათი აიტვირთა");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "ატვირთვა ვერ მოხერხდა");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
