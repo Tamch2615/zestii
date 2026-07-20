@@ -54,9 +54,9 @@ function HomePage() {
               <span className="italic text-primary">ტი</span>
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
-              საერთაშორისო რეცეპტების ილუსტრირებული კრებული ქართულ ენაზე. საუზმიდან
-              ვახშმამდე, დესერტიდან სასმელამდე. ატვირთე შენი საოჯახო რეცეპტი, აღმოაჩინე
-              ახალი გემო, შეინახე ის, რაც შეგიყვარდა.
+              რეცეპტების ილუსტრირებული ბლოგი ქართულ ენაზე. საუზმიდან ვახშმამდე,
+              დესერტიდან სასმელამდე. ატვირთე შენი საოჯახო რეცეპტი, აღმოაჩინე ახალი
+              გემო, შეინახე ის, რაც შეგიყვარდა.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -86,7 +86,7 @@ function HomePage() {
                 className="aspect-[5/4] w-full rounded-[1.4rem] object-cover"
               />
               <div className="mt-4 flex items-baseline justify-between px-2">
-                <p className="font-serif text-xs italic text-muted-foreground">little book of recipes</p>
+                <p className="font-serif text-xs italic text-muted-foreground">{"\n"}</p>
               </div>
             </div>
             <div
@@ -108,7 +108,7 @@ function HomePage() {
             <span className="italic text-primary">კატეგორიები</span>
           </h2>
           <p className="hidden text-sm italic text-muted-foreground md:inline">
-            აირჩიე გემო, რასაც ეძებ
+            აირჩიე, რასაც ეძებ
           </p>
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
@@ -176,7 +176,7 @@ function HomePage() {
             <span className="text-primary">ტი</span>
           </p>
           <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-muted-foreground">
-            © 2026 · საბაკალავრო პროექტი (BIT-21.2025.G)
+            © 2026 ZESTI · საბაკალავრო პროექტი-BTU
           </p>
         </div>
       </footer>
