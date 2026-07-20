@@ -30,6 +30,7 @@ export function RecipeForm({ initialId }: { initialId?: string } = {}) {
   const [steps, setSteps] = useState<string[]>([""]);
   const [selectedCats, setSelectedCats] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const { data: existing } = useQuery({
