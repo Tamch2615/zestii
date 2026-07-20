@@ -79,9 +79,17 @@ function ProfilePage() {
       {/* Profile header */}
       <div className="mb-10 flex flex-col items-start justify-between gap-6 rounded-3xl border border-border bg-card p-8 md:flex-row md:items-center">
         <div className="flex items-center gap-5">
-          <div className="grid size-20 place-items-center rounded-full bg-brand-secondary/20 font-serif text-3xl font-bold text-primary">
-            {profile?.username?.[0] ?? "მ"}
-          </div>
+          {profile?.avatar_url ? (
+            <img
+              src={profile.avatar_url}
+              alt={profile.username ?? "avatar"}
+              className="size-20 rounded-full object-cover"
+            />
+          ) : (
+            <div className="grid size-20 place-items-center rounded-full bg-brand-secondary/20 font-serif text-3xl font-bold text-primary">
+              {profile?.username?.[0] ?? "მ"}
+            </div>
+          )}
           <div>
             <h1 className="font-serif text-3xl font-bold">
               {profile?.username ?? "მომხმარებელი"}
@@ -93,6 +101,12 @@ function ProfilePage() {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setEditOpen(true)}
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-accent"
+          >
+            <Pencil className="size-4" /> პროფილის რედაქტირება
+          </button>
           <Link
             to="/new-recipe"
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
@@ -107,6 +121,19 @@ function ProfilePage() {
           </button>
         </div>
       </div>
+
+      {editOpen && (
+        <EditProfileDialog
+          userId={user.id}
+          initialUsername={profile?.username ?? ""}
+          initialAvatar={profile?.avatar_url ?? ""}
+          onClose={() => setEditOpen(false)}
+          onSaved={() => {
+            qc.invalidateQueries({ queryKey: ["profile", user.id] });
+            setEditOpen(false);
+          }}
+        />
+      )}
 
       {/* Tabs */}
       <div className="mb-6 flex gap-6 border-b border-border">
