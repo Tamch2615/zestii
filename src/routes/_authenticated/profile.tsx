@@ -18,12 +18,14 @@ function ProfilePage() {
   const qc = useQueryClient();
   const [tab, setTab] = useState<"mine" | "saved">("mine");
 
+  const [editOpen, setEditOpen] = useState(false);
+
   const { data: profile } = useQuery({
     queryKey: ["profile", user.id],
     queryFn: async () => {
       const { data } = await supabase
         .from("profiles")
-        .select("username, bio")
+        .select("username, bio, avatar_url")
         .eq("id", user.id)
         .maybeSingle();
       return data;
