@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { CATEGORIES, recipeSchema } from "@/lib/recipes";
-import { X, Plus } from "lucide-react";
+import { X, Plus, Upload, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/edit-recipe/$id")({
   head: () => ({ meta: [{ title: "რეცეპტის რედაქტირება · ზესტი" }] }),
@@ -30,6 +30,7 @@ export function RecipeForm({ initialId }: { initialId?: string } = {}) {
   const [steps, setSteps] = useState<string[]>([""]);
   const [selectedCats, setSelectedCats] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const { data: existing } = useQuery({
@@ -73,6 +74,35 @@ export function RecipeForm({ initialId }: { initialId?: string } = {}) {
     const next = [...list];
     next[idx] = val;
     setter(next);
+  };
+
+  const handleFileUpload = async (file: File) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      return toast.error("გთხოვთ, აირჩიოთ სურათი");
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      return toast.error("ფაილი 5MB-ზე მეტია");
+    }
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() || "jpg";
+      const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("recipe-images")
+        .upload(path, file, { cacheControl: "3600", upsert: false });
+      if (upErr) throw upErr;
+      const { data: signed, error: signErr } = await supabase.storage
+        .from("recipe-images")
+        .createSignedUrl(path, 60 * 60 * 24 * 365 * 50);
+      if (signErr) throw signErr;
+      setImageUrl(signed.signedUrl);
+      toast.success("სურათი აიტვირთა");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "ატვირთვა ვერ მოხერხდა");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -166,14 +196,41 @@ export function RecipeForm({ initialId }: { initialId?: string } = {}) {
               required
             />
           </Field>
-          <Field label="სურათის URL (არასავალდებულო)">
-            <input
-              type="url"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              className="input"
-              placeholder="https://..."
-            />
+          <Field label="სურათი (არასავალდებულო)">
+            <div className="space-y-2">
+              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border bg-background px-4 py-3 text-sm font-semibold hover:border-primary hover:bg-accent">
+                {uploading ? (
+                  <><Loader2 className="size-4 animate-spin" /> იტვირთება...</>
+                ) : (
+                  <><Upload className="size-4" /> ატვირთე ფოტო (Choose file)</>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  disabled={uploading}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) handleFileUpload(f);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+              <input
+                type="url"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                className="input"
+                placeholder="ან ჩასვი სურათის URL: https://..."
+              />
+              {imageUrl && (
+                <img
+                  src={imageUrl}
+                  alt="preview"
+                  className="mt-2 h-40 w-full rounded-xl border border-border object-cover"
+                />
+              )}
+            </div>
           </Field>
         </div>
 
