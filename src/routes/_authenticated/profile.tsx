@@ -256,3 +256,170 @@ function EmptyState({
     </div>
   );
 }
+
+function EditProfileDialog({
+  userId,
+  initialUsername,
+  initialAvatar,
+  onClose,
+  onSaved,
+}: {
+  userId: string;
+  initialUsername: string;
+  initialAvatar: string;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [username, setUsername] = useState(initialUsername);
+  const [avatarUrl, setAvatarUrl] = useState(initialAvatar);
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  const uploadAvatar = async (file: File) => {
+    if (!file.type.startsWith("image/")) return toast.error("გთხოვთ, აირჩიოთ სურათი");
+    if (file.size > 5 * 1024 * 1024) return toast.error("ფაილი 5MB-ზე მეტია");
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() || "jpg";
+      const path = `${userId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("avatars")
+        .upload(path, file, { cacheControl: "3600", upsert: false });
+      if (upErr) throw upErr;
+      const { data: signed, error: signErr } = await supabase.storage
+        .from("avatars")
+        .createSignedUrl(path, 60 * 60 * 24 * 365 * 50);
+      if (signErr) throw signErr;
+      setAvatarUrl(signed.signedUrl);
+      toast.success("ავატარი აიტვირთა");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "ატვირთვა ვერ მოხერხდა");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const save = async () => {
+    const name = username.trim();
+    if (name.length < 3 || name.length > 30) {
+      return toast.error("Username უნდა იყოს 3-30 სიმბოლო");
+    }
+    setSaving(true);
+    try {
+      if (name !== initialUsername) {
+        const { data: taken } = await supabase
+          .from("profiles")
+          .select("id")
+          .eq("username", name)
+          .neq("id", userId)
+          .maybeSingle();
+        if (taken) {
+          setSaving(false);
+          return toast.error("ეს username უკვე დაკავებულია");
+        }
+      }
+      const { error } = await supabase
+        .from("profiles")
+        .update({ username: name, avatar_url: avatarUrl || null })
+        .eq("id", userId);
+      if (error) throw error;
+      toast.success("პროფილი განახლდა");
+      onSaved();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "შენახვა ვერ მოხერხდა");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-md rounded-3xl border border-border bg-card p-6 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-serif text-2xl font-bold">პროფილის რედაქტირება</h2>
+          <button
+            onClick={onClose}
+            className="grid size-9 place-items-center rounded-lg hover:bg-accent"
+            aria-label="დახურვა"
+          >
+            <X className="size-4" />
+          </button>
+        </div>
+
+        <div className="mb-5 flex flex-col items-center gap-3">
+          {avatarUrl ? (
+            <img src={avatarUrl} alt="avatar" className="size-24 rounded-full object-cover" />
+          ) : (
+            <div className="grid size-24 place-items-center rounded-full bg-brand-secondary/20 font-serif text-4xl font-bold text-primary">
+              {username[0] ?? "მ"}
+            </div>
+          )}
+          <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-border bg-background px-4 py-2 text-sm font-semibold hover:bg-accent">
+            {uploading ? (
+              <><Loader2 className="size-4 animate-spin" /> იტვირთება...</>
+            ) : (
+              <><Upload className="size-4" /> ფოტოს შეცვლა</>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              disabled={uploading}
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) uploadAvatar(f);
+                e.target.value = "";
+              }}
+            />
+          </label>
+          {avatarUrl && (
+            <button
+              type="button"
+              onClick={() => setAvatarUrl("")}
+              className="text-xs text-muted-foreground hover:text-destructive"
+            >
+              ავატარის მოშორება
+            </button>
+          )}
+        </div>
+
+        <label className="mb-1.5 block text-sm font-semibold">Username</label>
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="mb-5 w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:border-primary"
+          placeholder="შენი username"
+          maxLength={30}
+        />
+
+        <div className="flex gap-2">
+          <button
+            onClick={save}
+            disabled={saving || uploading}
+            className="flex-1 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+          >
+            {saving ? "იტვირთება..." : "შენახვა"}
+          </button>
+          <button
+            onClick={onClose}
+            className="rounded-xl border border-border px-5 py-2.5 text-sm font-semibold hover:bg-accent"
+          >
+            გაუქმება
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
