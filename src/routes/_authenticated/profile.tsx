@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { RecipeCard, type RecipeCardData } from "@/components/RecipeCard";
 import { toast } from "sonner";
-import { LogOut, Pencil, Trash2, Plus } from "lucide-react";
+import { LogOut, Pencil, Trash2, Plus, Upload, Loader2, X } from "lucide-react";
 import { categoryLabel } from "@/lib/recipes";
 
 export const Route = createFileRoute("/_authenticated/profile")({
