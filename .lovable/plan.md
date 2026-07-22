@@ -1,28 +1,47 @@
-## რა დაემატება
+# ZESTI — საბაკალავრო ნაშრომის დოკუმენტაცია
 
-### 1. სურათის ატვირთვა რეცეპტზე (კომპიუტერი/ტელეფონი)
-- ახალი Storage bucket `recipe-images` (public read, authenticated write, მხოლოდ საკუთარი ფაილების წაშლა/განახლება path-ის მიხედვით `{user_id}/...`).
-- `edit-recipe.$id.tsx`-ში URL input-ის გვერდით დაემატება `<input type="file" accept="image/*">` ღილაკი "ატვირთე ფოტო". მობილურზე ავტომატურად შემოთავაზდება კამერა/გალერეა.
-- ატვირთვის შემდეგ ფაილი აიტვირთება bucket-ში, მიიღება public URL და ჩაისმება `imageUrl` state-ში (preview ჩანს ქვემოთ).
-- ვალიდაცია: მაქს 5MB, მხოლოდ image/* MIME types.
+შევქმნი სრულ Word (.docx) დოკუმენტს სილაბუსის მოთხოვნების მიხედვით და შევინახავ `/mnt/documents/`-ში, საიდანაც ჩამოტვირთვას შეძლებ.
 
-### 2. პროფილის რედაქტირება
-- `profiles` ცხრილს უკვე აქვს `avatar_url` და `username` — schema ცვლილება არ სჭირდება.
-- Storage bucket `avatars` (public read, authenticated write path `{user_id}/...`).
-- `profile.tsx`-ზე დაემატება "პროფილის რედაქტირება" ღილაკი, რომელიც გახსნის მოდალს (Dialog):
-  - Avatar preview + "ფოტოს შეცვლა" file input.
-  - Username input (validation: 3-30 სიმბოლო, unique — DB-ს unique constraint არ აქვს username-ზე, მაგრამ დავამატებთ client-side check-ს `.maybeSingle()`-ით).
-  - "შენახვა" ღილაკი → `profiles` update + query invalidation.
-- Avatar გამოჩნდება header-ის მრგვალ ავატარშიც (ასოს ნაცვლად თუ არსებობს `avatar_url`).
+## ტექნიკური გაფორმება
+- A4, შრიფტი **Sylfaen**, ზომა **12** (სათაურები 14–18)
+- სტრიქონებს შორის ინტერვალი **1.5**
+- ველები: მარცხენა 2.5 სმ, მარჯვენა/ზედა/ქვედა 2 სმ
+- ციტირების სტილი: **Chicago** (footnotes + Bibliography)
+- ავტომატური სარჩევი (Word-ის TOC ველი)
+- გვერდების ნუმერაცია footer-ში
 
-## ტექნიკური დეტალები
+## შინაარსი (ყველა თავი შევსებული რეალური პროექტის მიხედვით)
 
-- Buckets შეიქმნება `supabase--storage_create_bucket` tool-ით (public=true).
-- RLS policies `storage.objects`-ზე migration-ით: INSERT/UPDATE/DELETE მხოლოდ `auth.uid()::text = (storage.foldername(name))[1]`.
-- Username uniqueness: არ ვამატებთ DB constraint-ს (არსებული duplicate-ები რომ არ გატყდეს), მხოლოდ client check.
-- ფაილის სახელი: `{user_id}/{timestamp}-{random}.{ext}`.
+**წინა ნაწილი**
+1. თავფურცელი — BTU, „ZESTI — კულინარიული რეცეპტების პერსონალური და ინტერაქტიული ბლოგი" / "ZESTI — Personal and Interactive Culinary Recipe Blog", სტუდენტი, პროგრამა, ხელმძღვანელი, თბილისი 2026
+2. განაცხადი ორიგინალურობის შესახებ
+3. აბსტრაქტი ქართულად და ინგლისურად (150–250 სიტყვა)
+4. ავტომატური სარჩევი
 
-## ცვლილებების ფაილები
-- `src/routes/_authenticated/edit-recipe.$id.tsx` — file upload UI + handler.
-- `src/routes/_authenticated/profile.tsx` — edit dialog, avatar preview.
-- ახალი migration — 2 bucket + storage RLS policies.
+**ძირითადი ნაწილი (მინ. 10–15 გვ.)**
+1. **შესავალი** — აქტუალურობა, პრობლემა, მიზანი, ამოცანები, პრაქტიკული მნიშვნელობა
+2. **თეორიული მიმოხილვა** — Web app, SPA, SSR, REST, BaaS, RLS ცნებები; მსგავსი სისტემები (Kulinaria.ge, Cookpad, Allrecipes); შერჩეული მიდგომის უპირატესობები
+3. **სისტემის მოთხოვნები და დიზაინი**
+   - ფუნქციური მოთხოვნები (auth, CRUD, ძებნა AND ლოგიკით, შენახვა, პროფილი, ატვირთვა)
+   - არაფუნქციური (უსაფრთხოება/RLS, სისწრაფე, საიმედოობა, რესპონსივი)
+   - მომხმარებლის როლები (სტუმარი, რეგისტრირებული, ავტორი)
+   - არქიტექტურა (ASCII დიაგრამა: Client ↔ TanStack Start ↔ Supabase)
+   - მონაცემთა ბაზის სტრუქტურა (profiles, recipes, saved_recipes — ცხრილი ველებით და კავშირებით)
+   - ტექნოლოგიური სტეკი (React 19, TanStack Start, Vite, Tailwind v4, Supabase/Lovable Cloud, Zod)
+4. **პრაქტიკული რეალიზაცია** — მოდულები (Auth, Recipes, Search, Profile, Storage), მუშაობის პროცესი, ინტერფეისის აღწერა, ტექნიკური გადაწყვეტილებები (RLS, signed URLs, ქართული ტექსტის ვალიდაცია regex-ით, AND-search), გაშვების ინსტრუქცია
+5. **ტესტირება და შედეგები** — შემოწმებული ფუნქციები, ტესტირების მეთოდი (მანუალური + სცენარული), შედეგები, გამოვლენილი და გამოსწორებული ბაგები (login pool sync, handle_new_user trigger, image mismatch, add-recipe error)
+6. **დასკვნა და რეკომენდაციები** — მიღწეული შედეგი, სამომავლო გაფართოებები (რეიტინგები, კომენტარები, ერთეულების გრამებში)
+7. **გამოყენებული ლიტერატურა** (Chicago) — TanStack, React, Supabase, Tailwind ოფიციალური დოკუმენტაცია, Wikimedia Commons, აკადემიური სტატიები
+8. **დანართები** — ბაზის დიაგრამა, სატესტო ცხრილი, Published URL
+
+## ტექნიკური განხორციელება
+- Python `docx` სკრიპტი: სტილები Sylfaen 12/1.5, ველები, header/footer, ავტომატური TOC ველი, Chicago-style footnotes და bibliography
+- QA: pdf-ად კონვერტაცია LibreOffice-ით, ყველა გვერდის ვიზუალური შემოწმება (გადაფარვები, ქართული გლიფები, გვერდის ზომა)
+- საბოლოო ფაილი: `/mnt/documents/ZESTI_Bachelor_Thesis.docx`
+
+## რაც შენგან მჭირდება (შემიძლია placeholder-ებით შევავსო, თუ ახლა არ მითხრი)
+- სტუდენტის სახელი და გვარი
+- პროგრამის ზუსტი დასახელება (მაგ. „ინფორმაციული ტექნოლოგიები")
+- ხელმძღვანელის სახელი და გვარი
+
+თუ არ მითხრი, ჩავწერ `[სახელი გვარი]` / `[ხელმძღვანელი]` სახით, რომ მერე მარტივად ჩაანაცვლო Word-ში.
