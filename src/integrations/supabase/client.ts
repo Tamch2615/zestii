@@ -27,15 +27,18 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
 }
 
 function createSupabaseClient() {
-  // იყენებს გარემოს ცვლადებს, ხოლო თუ ვერ იპოვა, პირდაპირ იღებს სარეზერვო (Fallback) მნიშვნელობებს
+  // უსაფრთხოდ იღებს პროცესის ცვლადს მხოლოდ მაშინ, თუ ის არსებობს (SSR/სერვერზე)
+  const processEnvUrl = typeof process !== 'undefined' && process.env ? process.env.SUPABASE_URL : undefined;
+  const processEnvKey = typeof process !== 'undefined' && process.env ? process.env.SUPABASE_PUBLISHABLE_KEY : undefined;
+
   const SUPABASE_URL = 
     import.meta.env.VITE_SUPABASE_URL || 
-    process.env.SUPABASE_URL || 
+    processEnvUrl || 
     "https://wmwfciwyxvhmuxngyese.supabase.co";
 
   const SUPABASE_PUBLISHABLE_KEY = 
     import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || 
-    process.env.SUPABASE_PUBLISHABLE_KEY || 
+    processEnvKey || 
     "sb_publishable_aAxRNvBoxWGd2zm6TXXRKg_-6WFvCNh";
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
