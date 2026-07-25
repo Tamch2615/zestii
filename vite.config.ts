@@ -12,4 +12,20 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    define: {
+      'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(
+        process.env.VITE_SUPABASE_URL || "https://wmwfciwyxvhmuxngyese.supabase.co"
+      ),
+      'import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY': JSON.stringify(
+        process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_aAxRNvBoxWGd2zm6TXXRKg_-6WFvCNh"
+      ),
+      'process.env.SUPABASE_URL': JSON.stringify(
+        process.env.SUPABASE_URL || "https://wmwfciwyxvhmuxngyese.supabase.co"
+      ),
+      'process.env.SUPABASE_PUBLISHABLE_KEY': JSON.stringify(
+        process.env.SUPABASE_PUBLISHABLE_KEY || "sb_publishable_aAxRNvBoxWGd2zm6TXXRKg_-6WFvCNh"
+      ),
+    },
+  },
 });
