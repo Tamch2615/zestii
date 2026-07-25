@@ -7,6 +7,27 @@ import { toast } from "sonner";
 import { categoryLabel } from "@/lib/recipes";
 import { BackButton } from "@/components/BackButton";
 
+// 🖼️ სათაურის მიხედვით სწორი ლოკალური ფოტოს არჩევის ლოგიკა
+function getRecipeImage(title: string, imageUrl?: string | null): string {
+  if (imageUrl && !imageUrl.includes("lovable-uploads") && !imageUrl.includes("asset.json")) {
+    return imageUrl;
+  }
+
+  const t = title.toLowerCase();
+
+  if (t.includes("აჭარული") || t.includes("ხაჭაპური")) return "/acharuli-khachapuri.jpg";
+  if (t.includes("ხინკალი")) return "/khinkali.jpg";
+  if (t.includes("ლობიო")) return "/lobio-pot.webp";
+  if (t.includes("ფხალი")) return "/spinach-pkhali.jpeg";
+  if (t.includes("ბადრიჯანი")) return "/walnut-eggplant.jpg";
+  if (t.includes("ტყემალი")) return "/green-tkemali.jpg";
+  if (t.includes("ფელამუში")) return "/pelamushi.webp";
+  if (t.includes("ჩურჩხელა")) return "/churchkhela-walnut.jpeg";
+  if (t.includes("ავოკადო") || t.includes("ტოსტი")) return "/EWL-267169-avocado-egg-toast-Hero-01-9385a3b6112b409b944e04d1cb6a9733.jpg";
+
+  return "/hero-food.jpg";
+}
+
 export const Route = createFileRoute("/recipes/$id")({
   head: ({ loaderData }: { loaderData?: { title?: string; description?: string } }) => ({
     meta: [
@@ -114,23 +135,22 @@ function RecipeDetail() {
   const steps = (recipe.steps as string[]) ?? [];
   const isAuthor = userId === recipe.author_id;
 
+  // 📸 განახლებული ფოტოს მისამართი
+  const imageSrc = getRecipeImage(recipe.title, recipe.image_url);
+
   return (
     <main className="mx-auto max-w-4xl px-6 py-8">
       <div className="mb-6">
         <BackButton />
       </div>
 
-
-
-      {recipe.image_url && (
-        <div className="mb-8 overflow-hidden rounded-3xl">
-          <img
-            src={recipe.image_url}
-            alt={recipe.title}
-            className="aspect-[16/9] w-full object-cover"
-          />
-        </div>
-      )}
+      <div className="mb-8 overflow-hidden rounded-3xl">
+        <img
+          src={imageSrc}
+          alt={recipe.title}
+          className="aspect-[16/9] w-full object-cover"
+        />
+      </div>
 
       <div className="mb-4 flex flex-wrap gap-2">
         {(recipe.categories ?? []).map((c: string) => (
