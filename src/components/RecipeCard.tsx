@@ -14,36 +14,24 @@ interface RecipeCardProps {
 }
 
 function getRecipeImage(title: string, imageUrl?: string | null): string {
-  // თუ ბაზის ლინკი გაფუჭებული Lovable/Supabase Storage-ის ლინკია, უგულებელვყოფთ!
-  const isBrokenUrl =
-    !imageUrl ||
-    imageUrl.includes("lovable-uploads") ||
-    imageUrl.includes("supabase.co") ||
-    imageUrl.includes("asset.json");
-
-  if (!isBrokenUrl) {
-    return imageUrl;
-  }
-
   const t = title.toLowerCase();
 
-  // 100%-ით მომუშავე Unsplash / ლოკალური ფოტოები
-  if (t.includes("ხაჭაპური") || t.includes("აჭარული"))
-    return "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=800&q=80";
-  if (t.includes("ხინკალი"))
-    return "https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=800&q=80";
-  if (t.includes("ლობიო"))
-    return "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80";
-  if (t.includes("ფხალი"))
-    return "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80";
-  if (t.includes("ბადრიჯანი"))
-    return "https://images.unsplash.com/photo-1625944525533-473f1a3d54e7?auto=format&fit=crop&w=800&q=80";
-  if (t.includes("ტყემალი"))
-    return "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?auto=format&fit=crop&w=800&q=80";
-  if (t.includes("სალათი") || t.includes("ბერძნული"))
-    return "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80";
+  // 1. ჯერ ვამოწმებთ სათაურს და ვუსვამთ შენს public-ის ფოტოებს:
+  if (t.includes("ხაჭაპური") || t.includes("აჭარული")) return "/acharuli-khachapuri.jpg";
+  if (t.includes("ხინკალი")) return "/khinkali.jpg";
+  if (t.includes("ლობიო")) return "/lobio-pot.webp";
+  if (t.includes("ფხალი")) return "/spinach-pkhali.jpeg";
+  if (t.includes("ბადრიჯანი")) return "/walnut-eggplant.jpg";
+  if (t.includes("ტყემალი")) return "/green-tkemali.jpg";
+  if (t.includes("ფელამუში")) return "/pelamushi.webp";
+  if (t.includes("ჩურჩხელა")) return "/churchkhela-walnut.jpeg";
+  if (t.includes("ავოკადო") || t.includes("ტოსტი")) return "/EWL-267169-avocado-egg-toast-Hero-01-9385a3b6112b409b944e04d1cb6a9733.jpg";
 
-  return "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80";
+  // 2. თუ ჩვეულებრივი ლოკალური ფოტოა, რომელსაც / ეწყება
+  if (imageUrl && imageUrl.startsWith("/")) return imageUrl;
+
+  // 3. სათადარიგო ფოტო
+  return "/hero-food.jpg";
 }
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
