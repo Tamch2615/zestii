@@ -47,7 +47,7 @@ export const recipeSchema = z.object({
     .min(1, "მინიმუმ 1 წუთი")
     .max(1440, "მაქსიმუმ 24 საათი"),
   categories: z.array(z.string()).min(1, "აირჩიეთ მინიმუმ ერთი კატეგორია"),
-  image_url: z.string().url().optional().or(z.literal("")),
+  image_url: z.string().optional().or(z.literal("")),
 });
 
 export type RecipeInput = z.infer<typeof recipeSchema>;
