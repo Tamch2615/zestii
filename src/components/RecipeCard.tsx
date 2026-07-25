@@ -15,38 +15,42 @@ interface RecipeCardProps {
 
 function getRecipeImage(title: string, imageUrl?: string | null): string {
   const t = title.trim();
-
-  // 1. ინგლისურსახელიანი ფოტოები (რომლებიც ადრე გქონდა ატვირთული):
   const lower = t.toLowerCase();
+
+  // 1. ქართული კერძები
   if (lower.includes("ხაჭაპური") || lower.includes("აჭარული")) return "/acharuli-khachapuri.jpg";
   if (lower.includes("ხინკალი")) return "/khinkali.jpg";
   if (lower.includes("ლობიო")) return "/lobio-pot.webp";
   if (lower.includes("ფხალი")) return "/spinach-pkhali.jpeg";
   if (lower.includes("ბადრიჯანი")) return "/walnut-eggplant.jpg";
-  if (lower.includes("ტყემალი")) return "/green-tkemali.jpg";
+  if (lower.includes("ტყემალი") || lower.includes("ტკემალი")) return "/green-tkemali.jpg";
   if (lower.includes("ფელამუში")) return "/pelamushi.webp";
   if (lower.includes("ჩურჩხელა")) return "/churchkhela-walnut.jpeg";
+  if (lower.includes("ჩახოხბილი")) return "/ჩახოხბილი ქათმით.jpg";
+  if (lower.includes("ღვინო")) return "/ღვინო საფერავი.jpg";
+  if (lower.includes("ტარხუნის")) return "/ტარხუნის ლიმონათი.jpg";
+
+  // 2. უცხოური კერძები (ონლაინ გარანტირებული ფოტოები + public)
   if (lower.includes("ავოკადო") || lower.includes("ტოსტი")) return "/EWL-267169-avocado-egg-toast-Hero-01-9385a3b6112b409b944e04d1cb6a9733.jpg";
+  if (lower.includes("ბერძნული") || lower.includes("სალათი")) {
+    return "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80";
+  }
+  if (lower.includes("ჩიქენ") || lower.includes("ინდური") || lower.includes("ტიკა")) {
+    return "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=800&q=80";
+  }
+  if (lower.includes("ტაკო") || lower.includes("კარნიტასით")) return "/ტაკო კარნიტასით.jpg";
+  if (lower.includes("ბლინი")) return "/ამერიკული ბლინი.jpg";
+  if (lower.includes("მარტინი")) return "/ესპრესო მარტინი.webp";
+  if (lower.includes("ვიეტნამური")) return "/ვიეტნამური ფო ბო.jpg";
+  if (lower.includes("შაქშუკა")) return "/თურქული შაქშუკა.jpeg";
+  if (lower.includes("მაწონი")) return "/მაწონი ხილით.jpg";
+  if (lower.includes("კარბონარა")) return "/პასტა კარბონარა.jpg";
+  if (lower.includes("მარგარიტა") || lower.includes("პიცა")) return "/პიცა მარგარიტა.jpg";
+  if (lower.includes("სუში")) return "/სუში ლოსოსით.jpeg";
+  if (lower.includes("ტირამისუ")) return "/ტირამისუ.jpg";
+  if (lower.includes("კრუასანი")) return "/ფრანგული კრუასანი.jpg";
 
-  // 2. ქართულსახელიანი ფოტოები (რომლებიც ახლა ატვირთე):
-  if (t.includes("ამერიკული ბლინი")) return "/ამერიკული ბლინი.jpg";
-  if (t.includes("ესპრესო მარტინი")) return "/ესპრესო მარტინი.webp";
-  if (t.includes("ვიეტნამური ფო")) return "/ვიეტნამური ფო ბო.jpg";
-  if (t.includes("თურქული შაქშუკა")) return "/თურქული შაქშუკა.jpeg";
-  if (t.includes("მაწონი ხილით")) return "/მაწონი ხილით.jpg";
-  if (t.includes("პასტა კარბონარა")) return "/პასტა კარბონარა.jpg";
-  if (t.includes("პიცა მარგარიტა")) return "/პიცა მარგარიტა.jpg";
-  if (t.includes("სუში ლოსოსით")) return "/სუში ლოსოსით.jpeg";
-  if (t.includes("ტაკო კარნიტასით")) return "/ტაკო კარნიტასით.jpg";
-  if (t.includes("ტარხუნის ლიმონათი")) return "/ტარხუნის ლიმონათი.jpg";
-  if (t.includes("ტირამისუ")) return "/ტირამისუ.jpg";
-  if (t.includes("ფრანგული კრუასანი")) return "/ფრანგული კრუასანი.jpg";
-  if (t.includes("ღვინო საფერავი")) return "/ღვინო საფერავი.jpg";
-  if (t.includes("ჩახოხბილი")) return "/ჩახოხბილი ქათმით.jpg";
-  if (t.includes("ბერძნული")) return "/greek-salad.jpg";
-  if (t.includes("ინდური") || t.includes("ჩიქენ")) return "/chicken-tikka.jpg";
-
-  // 3. თუ ლოკალური ლინკია ბაზაში:
+  // 3. თუ ლოკალური ფოტოა
   if (imageUrl && imageUrl.startsWith("/")) return imageUrl;
 
   // 4. სათადარიგო
