@@ -3,8 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { CATEGORIES } from "@/lib/recipes";
 import { RecipeCard, type RecipeCardData } from "@/components/RecipeCard";
-import heroAsset from "@/assets/hero-food-new.jpg.asset.json";
-const heroImg = heroAsset.url;
 import { Search } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -79,7 +77,7 @@ function HomePage() {
           <div className="relative">
             <div className="relative rounded-[2rem] border border-border bg-card p-4 shadow-[0_30px_80px_-30px_rgba(90,60,30,0.35)] md:p-6">
               <img
-                src={heroImg}
+                src="/hero-food.jpg"
                 alt="ილუსტრირებული საერთაშორისო სუფრა"
                 width={1408}
                 height={1104}
