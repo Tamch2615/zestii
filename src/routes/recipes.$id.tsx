@@ -8,20 +8,46 @@ import { categoryLabel } from "@/lib/recipes";
 import { BackButton } from "@/components/BackButton";
 
 function getRecipeImage(title: string, imageUrl?: string | null): string {
-  const t = title.toLowerCase();
+  const t = title.trim();
+  const lower = t.toLowerCase();
 
-  if (t.includes("ხაჭაპური") || t.includes("აჭარული")) return "/acharuli-khachapuri.jpg";
-  if (t.includes("ხინკალი")) return "/khinkali.jpg";
-  if (t.includes("ლობიო")) return "/lobio-pot.webp";
-  if (t.includes("ფხალი")) return "/spinach-pkhali.jpeg";
-  if (t.includes("ბადრიჯანი")) return "/walnut-eggplant.jpg";
-  if (t.includes("ტყემალი")) return "/green-tkemali.jpg";
-  if (t.includes("ფელამუში")) return "/pelamushi.webp";
-  if (t.includes("ჩურჩხელა")) return "/churchkhela-walnut.jpeg";
-  if (t.includes("ავოკადო") || t.includes("ტოსტი")) return "/EWL-267169-avocado-egg-toast-Hero-01-9385a3b6112b409b944e04d1cb6a9733.jpg";
+  // 1. ქართული კერძები
+  if (lower.includes("ხაჭაპური") || lower.includes("აჭარული")) return "/acharuli-khachapuri.jpg";
+  if (lower.includes("ხინკალი")) return "/khinkali.jpg";
+  if (lower.includes("ლობიო")) return "/lobio-pot.webp";
+  if (lower.includes("ფხალი")) return "/spinach-pkhali.jpeg";
+  if (lower.includes("ბადრიჯანი")) return "/walnut-eggplant.jpg";
+  if (lower.includes("ტყემალი") || lower.includes("ტკემალი")) return "/green-tkemali.jpg";
+  if (lower.includes("ფელამუში")) return "/pelamushi.webp";
+  if (lower.includes("ჩურჩხელა")) return "/churchkhela-walnut.jpeg";
+  if (lower.includes("ჩახოხბილი")) return "/ჩახოხბილი ქათმით.jpg";
+  if (lower.includes("ღვინო")) return "/ღვინო საფერავი.jpg";
+  if (lower.includes("ტარხუნის")) return "/ტარხუნის ლიმონათი.jpg";
 
-  if (imageUrl && imageUrl.startsWith("/")) return imageUrl;
+  // 2. უცხოური კერძები (ონლაინ გარანტირებული ფოტოები + public)
+  if (lower.includes("ავოკადო") || lower.includes("ტოსტი")) return "/EWL-267169-avocado-egg-toast-Hero-01-9385a3b6112b409b944e04d1cb6a9733.jpg";
+  if (lower.includes("ბერძნული") || lower.includes("სალათი")) {
+    return "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80";
+  }
+  if (lower.includes("ჩიქენ") || lower.includes("ინდური") || lower.includes("ტიკა")) {
+    return "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=800&q=80";
+  }
+  if (lower.includes("ტაკო") || lower.includes("კარნიტასით")) return "/ტაკო კარნიტასით.jpg";
+  if (lower.includes("ბლინი")) return "/ამერიკული ბლინი.jpg";
+  if (lower.includes("მარტინი")) return "/ესპრესო მარტინი.webp";
+  if (lower.includes("ვიეტნამური")) return "/ვიეტნამური ფო ბო.jpg";
+  if (lower.includes("შაქშუკა")) return "/თურქული შაქშუკა.jpeg";
+  if (lower.includes("მაწონი")) return "/მაწონი ხილით.jpg";
+  if (lower.includes("კარბონარა")) return "/პასტა კარბონარა.jpg";
+  if (lower.includes("მარგარიტა") || lower.includes("პიცა")) return "/პიცა მარგარიტა.jpg";
+  if (lower.includes("სუში")) return "/სუში ლოსოსით.jpeg";
+  if (lower.includes("ტირამისუ")) return "/ტირამისუ.jpg";
+  if (lower.includes("კრუასანი")) return "/ფრანგული კრუასანი.jpg";
 
+  // 3. თუ ბაზაში/ლოკალურად არის ფოტო
+  if (imageUrl) return imageUrl;
+
+  // 4. სათადარიგო
   return "/hero-food.jpg";
 }
 
