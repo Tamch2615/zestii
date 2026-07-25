@@ -16,7 +16,7 @@ interface RecipeCardProps {
 function getRecipeImage(title: string, imageUrl?: string | null): string {
   const t = title.toLowerCase();
 
-  // 1. ჯერ ვამოწმებთ სათაურს და ვუსვამთ შენს public-ის ფოტოებს:
+  // 1. ვამოწმებთ სათაურებს და ვუსვამთ public/ საქაღალდის ფოტოებს:
   if (t.includes("ხაჭაპური") || t.includes("აჭარული")) return "/acharuli-khachapuri.jpg";
   if (t.includes("ხინკალი")) return "/khinkali.jpg";
   if (t.includes("ლობიო")) return "/lobio-pot.webp";
@@ -26,6 +26,8 @@ function getRecipeImage(title: string, imageUrl?: string | null): string {
   if (t.includes("ფელამუში")) return "/pelamushi.webp";
   if (t.includes("ჩურჩხელა")) return "/churchkhela-walnut.jpeg";
   if (t.includes("ავოკადო") || t.includes("ტოსტი")) return "/EWL-267169-avocado-egg-toast-Hero-01-9385a3b6112b409b944e04d1cb6a9733.jpg";
+  if (t.includes("ბერძნული") || t.includes("სალათი")) return "/greek-salad.jpg";
+  if (t.includes("ჩიქენ") || t.includes("ინდური") || t.includes("ტიკა")) return "/chicken-tikka.jpg";
 
   // 2. თუ ჩვეულებრივი ლოკალური ფოტოა, რომელსაც / ეწყება
   if (imageUrl && imageUrl.startsWith("/")) return imageUrl;
