@@ -39,7 +39,7 @@ export function RecipeCard({ recipe }: { recipe: RecipeCardData }) {
 
   return (
     <Link
-      to="/recipe/$id"
+      to="/recipes/$id"
       params={{ id: recipe.id }}
       className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-xl"
     >
